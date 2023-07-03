@@ -1,0 +1,61 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.1'
+	id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'oauth2'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	//lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	//jpa
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//oauth2
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	//h2
+	implementation 'com.h2database:h2'
+
+	//log
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+	//jwt
+	//https://sabarada.tistory.com/247
+	//jjwt 라이브러리
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+
+}
+
+configurations {
+	//기존 자바 로깅 프레임워크인 logback 종속성 제거
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+}
+
+/*ext ['spring-security.version']='5.3.2.RELEASE'
+  ext ['spring.version']= '5.2.6.RELEASE' */
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
